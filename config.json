@@ -1,7 +1,7 @@
 {
     "id":"cytoscape-two-nodes",
     "layout":{
-        "name":"spread"
+        "name":"cose"
     },
     "style":{
         "width":"100%",
