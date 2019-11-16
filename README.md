@@ -1,4 +1,4 @@
-# kSpace
+# abstraph
 
 > ## Draft Repo
 
@@ -7,5 +7,5 @@
 ## Run example
 
 ```bash
-python run.py sample_data/sample_100.tsv
+python run.py
 ```
