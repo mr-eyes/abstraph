@@ -1,5 +1,10 @@
 import random
 
+"""
+description: This class replaces the steps of indexing and kSpider pairwise calculation.
+pros: more portability and reduce the pipeline steps
+cons: too slow in handling large datasets
+"""
 
 class listDecoderParser:
     children_file = str()

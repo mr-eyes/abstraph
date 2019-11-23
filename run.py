@@ -1,3 +1,5 @@
+import os
+
 import dash
 import dash_cytoscape as cyto
 import dash_html_components as html
@@ -5,14 +7,19 @@ import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
 
-from DataParser import listDecoderParser
+from DataParser import kSpiderParser
 from DataParser import JsonParser
 
-Decoder = listDecoderParser(children_file="sample_data/children.tsv", parents_file="sample_data/parents.tsv")
+ABS_PATH = os.path.dirname(os.path.realpath(__file__))
+
+children_file_path = os.path.join(ABS_PATH, "sample_data/kSpider_children.tsv")
+parents_file_path = os.path.join(ABS_PATH, "sample_data/parents.tsv")
+
+Decoder = kSpiderParser(children_file= children_file_path , parents_file= parents_file_path)
+
+JSON = JsonParser(os.path.join(ABS_PATH, "config.json"))
 
 app = dash.Dash(__name__)
-
-JSON = JsonParser("config.json")
 
 app.layout = html.Div([
     # The drop down menu HTML element for changing the layout. connected to a callback.
