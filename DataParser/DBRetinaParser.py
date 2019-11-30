@@ -115,7 +115,7 @@ class DBRetinaParser:
             # print(f"parent_id: {parent_id}, parent_class: {parent_class}")
             self.elements.append(
                 {
-                    'data': {'id': parent_id, 'label': self.namesMap[parent_id]},
+                    'data': {'id': self.namesMap[parent_id], 'label': parent_id},
                     'style': {"background-color": self.class_to_color[parent_class]}
                 }
             )
