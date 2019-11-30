@@ -4,7 +4,7 @@ import random
 description: This class parse the kSpider pairwise output and visualize it.
 """
 
-class kSpiderParser:
+class DBRetinaParser:
     children_file = str()
     parents_file = str()
 
