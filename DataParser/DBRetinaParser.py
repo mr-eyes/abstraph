@@ -1,7 +1,16 @@
 import random
 
 """
-description: This class parse the kSpider pairwise output and visualize it.
+Description:
+    - Parse the DBRetina output and export it in a json file.
+
+Input: 
+    - kProcessor resulted namesMap file.
+    - kSpider Pairwise Similarity Matrix TSV.
+    - Parents metadata TSV.
+
+Output:
+    - Compatible JSON file of elements with CytoScape.js.
 """
 
 class DBRetinaParser:
