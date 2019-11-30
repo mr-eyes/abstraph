@@ -120,5 +120,10 @@ class DBRetinaParser:
                 }
             )
 
+    def export_elements(self):
+        import json
+        with open('cytoscape_elements.json', 'w') as json_writer:
+            json.dump(self.elements, json_writer)
+
     def get_elements(self):
         return self.elements
