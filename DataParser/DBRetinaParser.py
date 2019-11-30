@@ -13,9 +13,11 @@ Output:
     - Compatible JSON file of elements with CytoScape.js.
 """
 
+
 class DBRetinaParser:
     children_file = str()
     parents_file = str()
+    kProcessor_namesMap_file = str()
 
     nodes = list()
     edges = list()
@@ -28,15 +30,25 @@ class DBRetinaParser:
     parent_to_class = dict()
     class_to_parents = dict()
     class_to_color = dict()
+    namesMap = dict()
 
-    def __init__(self, children_file, parents_file):
-        self.children_file = children_file
+    def __init__(self, kProcessor_namesMap, pairwise_tsv, parents_file):
+        self.kProcessor_namesMap_file = kProcessor_namesMap
+        self.children_file = pairwise_tsv
         self.parents_file = parents_file
 
+        self.parse_namesMap()
         self.parse_parents()
         self.classes_coloring()
         self.construct_nodes()
         self.construct_edges()
+
+    def parse_namesMap(self):
+        with open(self.kProcessor_namesMap_file, 'r') as namesMap_reader:
+            next(namesMap_reader)  # Skip the total names count line
+            for line in namesMap_reader:
+                line = line.strip().split(" ")
+                self.namesMap[line[0]] = line[1]
 
     def construct_edges(self):
         """
@@ -63,7 +75,6 @@ class DBRetinaParser:
                         'style': {'label': shared_children_no},
                     }
                 )
-            
 
     def parse_parents(self):
         """
@@ -73,7 +84,7 @@ class DBRetinaParser:
             parent  database
 
         """
-        
+
         with open(self.parents_file, 'r') as parents_reader:
             next(parents_reader)  # skip the first line
             for parent_line in parents_reader:
@@ -108,7 +119,6 @@ class DBRetinaParser:
                     'style': {"background-color": self.class_to_color[parent_class]}
                 }
             )
-
 
     def get_elements(self):
         return self.elements
