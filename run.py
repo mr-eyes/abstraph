@@ -62,7 +62,8 @@ app.layout = html.Div([
         stylesheet=default_stylesheet,
         elements=Decoder.get_elements(),
     ),
-    html.Pre(id='cytoscape-tapNodeData-json', style=styles['pre'])
+    html.Pre(id='cytoscape-tapNodeData-json', style=styles['pre']),
+    html.P(id='parent_hovering_output'),
 ])
 
 ##################
@@ -81,7 +82,15 @@ def update_layout(layout):
 # This callback for printing the node information on Click
 @app.callback(Output('cytoscape-tapNodeData-json', 'children'), [Input(JSON.get_data("id"), 'tapNodeData')])
 def displayTapNodeData(data):
-    return json.dumps(data, indent=2)
+    if data is None:
+        return json.dumps({}, indent=2)
+    return json.dumps(Decoder.get_node_information(data["id"]), indent=2)
+
+
+@app.callback(Output('parent_hovering_output', 'children'), [Input(JSON.get_data("id"), 'mouseoverNodeData')])
+def displayTapNodeData(data):
+    if data:
+        return "Hovering over: " + Decoder.namesMap[data['id']]
 
 
 ###################
