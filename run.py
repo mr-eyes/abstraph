@@ -7,15 +7,16 @@ import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output, State
 
-from DataParser import kSpiderParser
+from DataParser import DBRetinaParser
 from DataParser import JsonParser
 
 ABS_PATH = os.path.dirname(os.path.realpath(__file__))
 
-children_file_path = os.path.join(ABS_PATH, "sample_data/kSpider_children.tsv")
-parents_file_path = os.path.join(ABS_PATH, "sample_data/parents.tsv")
+namesMap_file_path = os.path.join(ABS_PATH, "sample_data/DBRetina/kProcessor_namesMap.tsv")
+pairwise_file_path = os.path.join(ABS_PATH, "sample_data/DBRetina/kSpider_pairwise.tsv")
+parents_file_path = os.path.join(ABS_PATH, "sample_data/DBRetina/parents_metadata.tsv")
 
-Decoder = kSpiderParser(children_file= children_file_path , parents_file= parents_file_path)
+Decoder = DBRetinaParser(namesMap_file_path,pairwise_file_path, parents_file_path)
 
 JSON = JsonParser(os.path.join(ABS_PATH, "config.json"))
 
