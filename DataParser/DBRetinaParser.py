@@ -1,4 +1,5 @@
 import random
+import json
 
 """
 Description:
@@ -31,6 +32,7 @@ class DBRetinaParser:
     class_to_parents = dict()
     class_to_color = dict()
     namesMap = dict()
+    inv_namesMap = dict()
 
     def __init__(self, kProcessor_namesMap, pairwise_tsv, parents_file):
         self.kProcessor_namesMap_file = kProcessor_namesMap
@@ -48,7 +50,8 @@ class DBRetinaParser:
             next(namesMap_reader)  # Skip the total names count line
             for line in namesMap_reader:
                 line = line.strip().split(" ")
-                self.namesMap[line[1]] = line[0]  # name -> ID
+                self.namesMap[line[0]] = line[1]  # ID -> name
+                self.inv_namesMap[line[1]] = line[0]  # name -> ID
 
     def construct_edges(self):
         """
@@ -115,15 +118,20 @@ class DBRetinaParser:
             # print(f"parent_id: {parent_id}, parent_class: {parent_class}")
             self.elements.append(
                 {
-                    'data': {'id': self.namesMap[parent_id], 'label': parent_id},
+                    'data': {'id': self.inv_namesMap[parent_id]},
                     'style': {"background-color": self.class_to_color[parent_class]}
                 }
             )
 
     def export_elements(self):
-        import json
         with open('cytoscape_elements.json', 'w') as json_writer:
             json.dump(self.elements, json_writer)
+
+    def get_node_information(self, node_id):
+        info = dict()
+        info["name"] = self.namesMap[node_id]
+        info["database"] = self.parent_to_class[self.namesMap[node_id]]
+        return info
 
     def get_elements(self):
         return self.elements
