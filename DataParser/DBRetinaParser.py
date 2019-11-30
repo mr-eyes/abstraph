@@ -48,7 +48,7 @@ class DBRetinaParser:
             next(namesMap_reader)  # Skip the total names count line
             for line in namesMap_reader:
                 line = line.strip().split(" ")
-                self.namesMap[line[0]] = line[1]
+                self.namesMap[line[1]] = line[0]  # name -> ID
 
     def construct_edges(self):
         """
