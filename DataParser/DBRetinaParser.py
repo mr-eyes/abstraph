@@ -102,7 +102,7 @@ class DBRetinaParser:
     def classes_coloring(self):
         classes_names = list(self.class_to_parents.keys())
         number_of_classes = len(classes_names)
-
+        random.seed(369)
         all_colors = ["#" + ''.join([random.choice('0123456789ABCDEF') for j in range(6)])
                       for i in range(number_of_classes)]
 
