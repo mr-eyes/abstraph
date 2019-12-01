@@ -72,7 +72,7 @@ class DBRetinaParser:
                 parent2_id = line[1]
                 shared_children_no = line[2]
 
-                self.elements.append(
+                self.edges.append(
                     {
                         'data': {'source': parent1_id, 'target': parent2_id},
                         'style': {'label': shared_children_no},
@@ -116,7 +116,7 @@ class DBRetinaParser:
 
         for parent_id, parent_class in self.parent_to_class.items():
             # print(f"parent_id: {parent_id}, parent_class: {parent_class}")
-            self.elements.append(
+            self.nodes.append(
                 {
                     'data': {'id': self.inv_namesMap[parent_id]},
                     'style': {"background-color": self.class_to_color[parent_class]}
@@ -125,7 +125,9 @@ class DBRetinaParser:
 
     def export_elements(self):
         with open('cytoscape_elements.json', 'w') as json_writer:
-            json.dump(self.elements, json_writer)
+            js_file = dict()
+            js_file["elements"] = {"nodes": self.nodes, "edges": self.edges}
+            json.dump(js_file, json_writer)
 
     def get_node_information(self, node_id):
         info = dict()
@@ -134,4 +136,4 @@ class DBRetinaParser:
         return info
 
     def get_elements(self):
-        return self.elements
+        return self.nodes + self.edges
